@@ -11,6 +11,8 @@
     <Authors>SeongSikChae</Authors>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/SeongSikChae/System.IO.Extensions.git</RepositoryUrl>
+    <Description>.NET System.IO namespace Extensions</Description>
+    <PackageProjectUrl>https://github.com/SeongSikChae/System.IO.Extensions.git</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>
