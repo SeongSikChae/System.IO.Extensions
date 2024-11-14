@@ -15,7 +15,7 @@
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(IPAddress.Loopback);
 				memory.Position = 0;
-				IPAddress address = reader.ReadIPAddress(AddressFamily.InterNetwork);
+				IPAddress address = reader.ReadIPAddress();
 				Assert.AreEqual(IPAddress.Loopback, address);
 			}
 
@@ -25,7 +25,7 @@
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(IPAddress.IPv6Loopback);
 				memory.Position = 0;
-				IPAddress address = reader.ReadIPAddress(AddressFamily.InterNetworkV6);
+				IPAddress address = reader.ReadIPAddress();
 				Assert.AreEqual(IPAddress.IPv6Loopback, address);
 			}
 
@@ -35,7 +35,7 @@
 				using BinaryWriter writer = new BinaryWriterV2(memory);
 				writer.Write(IPAddress.Loopback);
 				memory.Position = 0;
-				IPAddress address = reader.ReadIPAddress(AddressFamily.InterNetwork);
+				IPAddress address = reader.ReadIPAddress();
 				Assert.AreEqual(IPAddress.Loopback, address);
 			}
 		}

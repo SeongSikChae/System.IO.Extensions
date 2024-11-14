@@ -11,13 +11,12 @@
 		/// <summary>
 		/// System.IO.BinaryWriter Write System.Net.IPAddress
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <param name="address"></param>
 		public static void Write(this BinaryWriter writer, IPAddress address)
 		{
 			ByteOrder order = ByteOrder.BigEndian;
 			if (writer is BinaryWriterV2 v)
 				order = v.Order;
+			writer.Write((int)address.AddressFamily);
 			byte[] buf = address.GetAddressBytes();
 			if (order == ByteOrder.LittleEndian)
 				Array.Reverse(buf);

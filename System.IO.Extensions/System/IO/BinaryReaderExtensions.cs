@@ -12,21 +12,13 @@
 		/// <summary>
 		/// System.IO.BinaryReader to Read System.Net.IPAddress
 		/// </summary>
-		/// <param name="reader"></param>
-		/// <param name="addressFamily"></param>
-		/// <returns></returns>
-		/// <exception cref="InvalidOperationException"></exception>
-		public static IPAddress ReadIPAddress(this BinaryReader reader, AddressFamily addressFamily)
+		public static IPAddress ReadIPAddress(this BinaryReader reader)
 		{
-			byte[] buf = addressFamily switch
-			{
-				AddressFamily.InterNetwork => reader.ReadBytes(4),
-				AddressFamily.InterNetworkV6 => reader.ReadBytes(16),
-				_ => throw new InvalidOperationException($"unsupported addressFamily '{addressFamily}'"),
-			};
 			ByteOrder order = ByteOrder.BigEndian;
 			if (reader is BinaryReaderV2 v)
 				order = v.Order;
+			AddressFamily family = (AddressFamily) reader.ReadInt32();
+			byte[] buf = reader.ReadBytes(family == AddressFamily.InterNetwork ? 4 : 16);
 			if (order == ByteOrder.LittleEndian)
 				Array.Reverse(buf);
 			return new IPAddress(buf);
