@@ -5,33 +5,33 @@
 	using Text;
 
 	/// <summary>
-	/// Reads a primitive data type as a binary value in a specific encoding, based on ByteOrder.
+	/// Reads a primitive data type as a binary value in a specific encoding, based on Endian.
 	/// </summary>
 	/// <param name="input"></param>
 	/// <param name="encoding"></param>
 	/// <param name="leaveOpen"></param>
-	/// <param name="order"></param>
-	public sealed class BinaryReaderV2(Stream input, Encoding encoding, bool leaveOpen, ByteOrder order) : BinaryReader(input, encoding, leaveOpen)
+	/// <param name="endian"></param>
+	public sealed class EndianBinaryReader(Stream input, Encoding encoding, bool leaveOpen, Endian endian) : BinaryReader(input, encoding, leaveOpen)
 	{
 		/// <summary>
-		/// Specify only stream and ByteOrder
+		/// Specify only stream and Endian
 		/// </summary>
 		/// <param name="input"></param>
-		/// <param name="order"></param>
-		public BinaryReaderV2(Stream input, ByteOrder order = ByteOrder.LittleEndian) : this(input, Encoding.UTF8, order) { }
+		/// <param name="endian"></param>
+		public EndianBinaryReader(Stream input, Endian endian = Endian.LittleEndian) : this(input, Encoding.UTF8, endian) { }
 
 		/// <summary>
-		/// Specify only stream, encoding, and ByteOrder
+		/// Specify only stream, encoding, and Endian
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="encoding"></param>
-		/// <param name="order"></param>
-		public BinaryReaderV2(Stream input, Encoding encoding, ByteOrder order = ByteOrder.LittleEndian) : this(input, encoding, false, order) { }
+		/// <param name="endian"></param>
+		public EndianBinaryReader(Stream input, Encoding encoding, Endian endian = Endian.LittleEndian) : this(input, encoding, false, endian) { }
 
 		/// <summary>
-		/// Byte Order
+		/// Byte Endian
 		/// </summary>
-		public ByteOrder Order => order;
+		public Endian Endian => endian;
 
 		/// <summary>
 		/// BinaryReaderV2 Override ReadInt16
@@ -41,9 +41,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(short)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadInt16BigEndian(buf),
+                Endian.BigEndian => BinaryPrimitives.ReadInt16BigEndian(buf),
 				_ => BinaryPrimitives.ReadInt16LittleEndian(buf),
 			};
 		}
@@ -56,9 +56,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(ushort)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadUInt16BigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadUInt16BigEndian(buf),
 				_ => BinaryPrimitives.ReadUInt16LittleEndian(buf),
 			};
 		}
@@ -71,9 +71,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(int)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadInt32BigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadInt32BigEndian(buf),
 				_ => BinaryPrimitives.ReadInt32LittleEndian(buf),
 			};
 		}
@@ -86,9 +86,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(uint)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadUInt32BigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadUInt32BigEndian(buf),
 				_ => BinaryPrimitives.ReadUInt32LittleEndian(buf),
 			};
 		}
@@ -101,9 +101,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(long)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadInt64BigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadInt64BigEndian(buf),
 				_ => BinaryPrimitives.ReadInt64LittleEndian(buf),
 			};
 		}
@@ -116,9 +116,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(ulong)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadUInt64BigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadUInt64BigEndian(buf),
 				_ => BinaryPrimitives.ReadUInt64LittleEndian(buf),
 			};
 		}
@@ -131,9 +131,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(ushort)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadHalfBigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadHalfBigEndian(buf),
 				_ => BinaryPrimitives.ReadHalfLittleEndian(buf),
 			};
 		}
@@ -146,9 +146,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(float)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadSingleBigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadSingleBigEndian(buf),
 				_ => BinaryPrimitives.ReadSingleLittleEndian(buf),
 			};
 		}
@@ -161,9 +161,9 @@
 		{
 			Span<byte> buf = stackalloc byte[sizeof(double)];
 			BaseStream.ReadExactly(buf);
-			return Order switch
+			return Endian switch
 			{
-				ByteOrder.BigEndian => BinaryPrimitives.ReadDoubleBigEndian(buf),
+				Endian.BigEndian => BinaryPrimitives.ReadDoubleBigEndian(buf),
 				_ => BinaryPrimitives.ReadDoubleLittleEndian(buf),
 			};
 		}
@@ -181,9 +181,9 @@
 			int mid;
 			int hi;
 			int flags;
-			switch (Order)
+			switch (Endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					flags = BinaryPrimitives.ReadInt32BigEndian(span);
 					hi = BinaryPrimitives.ReadInt32BigEndian(span[4..]);
 					mid = BinaryPrimitives.ReadInt32BigEndian(span[8..]);

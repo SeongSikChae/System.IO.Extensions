@@ -1,9 +1,9 @@
 ﻿namespace System.IO
 {
 	/// <summary>
-	/// Byte Order Enumeration
+	/// Endian Enumeration
 	/// </summary>
-	public enum ByteOrder
+	public enum Endian
 	{
 		/// <summary>
 		/// Little Endian

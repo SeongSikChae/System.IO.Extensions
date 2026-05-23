@@ -14,12 +14,12 @@
 		/// </summary>
 		public static IPAddress ReadIPAddress(this BinaryReader reader)
 		{
-			ByteOrder order = ByteOrder.BigEndian;
-			if (reader is BinaryReaderV2 v)
-				order = v.Order;
+			Endian endian = Endian.BigEndian;
+			if (reader is EndianBinaryReader v)
+				endian = v.Endian;
 			AddressFamily family = (AddressFamily) reader.ReadInt32();
 			byte[] buf = reader.ReadBytes(family == AddressFamily.InterNetwork ? 4 : 16);
-			if (order == ByteOrder.LittleEndian)
+			if (endian == Endian.LittleEndian)
 				Array.Reverse(buf);
 			return new IPAddress(buf);
 		}

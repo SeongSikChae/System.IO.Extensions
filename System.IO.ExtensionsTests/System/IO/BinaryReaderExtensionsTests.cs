@@ -31,8 +31,8 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.LittleEndian);
-				using BinaryWriterV2 writer = new BinaryWriterV2(memory, ByteOrder.LittleEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.LittleEndian);
+				using EndianBinaryWriter writer = new EndianBinaryWriter(memory, Endian.LittleEndian);
 				writer.Write(IPAddress.Loopback);
 				memory.Position = 0;
 				IPAddress address = reader.ReadIPAddress();
@@ -41,8 +41,8 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
-				using BinaryWriterV2 writer = new BinaryWriterV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
+				using EndianBinaryWriter writer = new EndianBinaryWriter(memory, Endian.BigEndian);
 				writer.Write(IPAddress.IPv6Loopback);
 				memory.Position = 0;
 				IPAddress address = reader.ReadIPAddress();

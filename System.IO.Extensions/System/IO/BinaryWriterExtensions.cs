@@ -13,12 +13,12 @@
 		/// </summary>
 		public static void Write(this BinaryWriter writer, IPAddress address)
 		{
-			ByteOrder order = ByteOrder.BigEndian;
-			if (writer is BinaryWriterV2 v)
-				order = v.Order;
+            Endian endian = Endian.BigEndian;
+			if (writer is EndianBinaryWriter v)
+				endian = v.Endian;
 			writer.Write((int)address.AddressFamily);
 			byte[] buf = address.GetAddressBytes();
-			if (order == ByteOrder.LittleEndian)
+			if (endian == Endian.LittleEndian)
 				Array.Reverse(buf);
 			writer.Write(buf);
 		}

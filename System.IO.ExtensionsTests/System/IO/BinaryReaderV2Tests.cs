@@ -1,14 +1,14 @@
 ﻿namespace System.IO.Tests
 {
 	[TestClass]
-	public class BinaryReaderV2Tests
+	public class EndianBinaryReaderTests
 	{
 		[TestMethod]
 		public void ReadInt16Test()
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0x01, 0x00]);
 				memory.Position = 0;
 				short value = reader.ReadInt16();
@@ -17,7 +17,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0x00, 0x01]);
 				memory.Position = 0;
 				short value = reader.ReadInt16();
@@ -30,7 +30,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0xfe, 0xff]);
 				memory.Position = 0;
 				ushort value = reader.ReadUInt16();
@@ -39,7 +39,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0xff, 0xfe]);
 				memory.Position = 0;
 				ushort value = reader.ReadUInt16();
@@ -52,7 +52,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0x01, 0x00, 0x00, 0x00]);
 				memory.Position = 0;
 				int value = reader.ReadInt32();
@@ -61,7 +61,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0x00, 0x00, 0x00, 0x01]);
 				memory.Position = 0;
 				int value = reader.ReadInt32();
@@ -74,7 +74,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0xfe, 0xff, 0xff, 0xff]);
 				memory.Position = 0;
 				uint value = reader.ReadUInt32();
@@ -83,7 +83,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0xff, 0xff, 0xff, 0xfe]);
 				memory.Position = 0;
 				uint value = reader.ReadUInt32();
@@ -96,7 +96,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 				memory.Position = 0;
 				long value = reader.ReadInt64();
@@ -105,7 +105,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01]);
 				memory.Position = 0;
 				long value = reader.ReadInt64();
@@ -118,7 +118,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				memory.Write([0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]);
 				memory.Position = 0;
 				ulong value = reader.ReadUInt64();
@@ -127,7 +127,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				memory.Write([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe]);
 				memory.Position = 0;
 				ulong value = reader.ReadUInt64();
@@ -140,7 +140,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write((Half)1.1);
 				memory.Position = 0;
@@ -150,7 +150,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write((Half)1.1);
 				byte[] buf = memory.ToArray();
@@ -168,7 +168,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(1.1f);
 				memory.Position = 0;
@@ -178,7 +178,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(1.1f);
 				byte[] buf = memory.ToArray();
@@ -196,7 +196,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(1.1);
 				memory.Position = 0;
@@ -206,7 +206,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write(1.1);
 				byte[] buf = memory.ToArray();
@@ -224,7 +224,7 @@
 		{
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory);
+				using BinaryReader reader = new EndianBinaryReader(memory);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write((decimal)1);
 				memory.Position = 0;
@@ -234,7 +234,7 @@
 
 			{
 				using MemoryStream memory = new MemoryStream();
-				using BinaryReader reader = new BinaryReaderV2(memory, ByteOrder.BigEndian);
+				using BinaryReader reader = new EndianBinaryReader(memory, Endian.BigEndian);
 				using BinaryWriter writer = new BinaryWriter(memory);
 				writer.Write((decimal)1);
 				byte[] buf = memory.ToArray();

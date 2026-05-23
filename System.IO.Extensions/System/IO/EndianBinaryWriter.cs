@@ -5,33 +5,33 @@
 	using Text;
 
 	/// <summary>
-	/// Writes the basic format of binary files to a stream according to ByteOrder and supports writing strings in a specific encoding.
+	/// Writes the basic format of binary files to a stream according to Endian and supports writing strings in a specific encoding.
 	/// </summary>
 	/// <param name="output"></param>
 	/// <param name="encoding"></param>
 	/// <param name="leaveOpen"></param>
-	/// <param name="order"></param>
-	public sealed class BinaryWriterV2(Stream output, Encoding encoding, bool leaveOpen, ByteOrder order) : BinaryWriter(output, encoding, leaveOpen)
+	/// <param name="endian"></param>
+	public sealed class EndianBinaryWriter(Stream output, Encoding encoding, bool leaveOpen, Endian endian) : BinaryWriter(output, encoding, leaveOpen)
 	{
 		/// <summary>
-		/// Specific streams and ByteOrder
+		/// Specific streams and Endian
 		/// </summary>
 		/// <param name="output"></param>
-		/// <param name="order"></param>
-		public BinaryWriterV2(Stream output, ByteOrder order = ByteOrder.LittleEndian) : this(output, Encoding.UTF8, order) { }
+		/// <param name="endian"></param>
+		public EndianBinaryWriter(Stream output, Endian endian = Endian.LittleEndian) : this(output, Encoding.UTF8, endian) { }
 
 		/// <summary>
-		/// Specific streams and encodings and ByteOrder
+		/// Specific streams and encodings and Endian
 		/// </summary>
 		/// <param name="output"></param>
 		/// <param name="encoding"></param>
-		/// <param name="order"></param>
-		public BinaryWriterV2(Stream output, Encoding encoding, ByteOrder order = ByteOrder.LittleEndian) : this(output, encoding, false, order) { }
+		/// <param name="endian"></param>
+		public EndianBinaryWriter(Stream output, Encoding encoding, Endian endian = Endian.LittleEndian) : this(output, encoding, false, endian) { }
 
 		/// <summary>
-		/// Byte Order
+		/// Byte endian
 		/// </summary>
-		public ByteOrder Order => order;
+		public Endian Endian => endian;
 
 		/// <summary>
 		/// BinaryWriterV2 Override Write Int16
@@ -40,9 +40,9 @@
 		public override void Write(short value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(short)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteInt16BigEndian(buffer, value);
 					break;
 				default:
@@ -59,9 +59,9 @@
 		public override void Write(ushort value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(ushort)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteUInt16BigEndian(buffer, value);
 					break;
 				default:
@@ -78,9 +78,9 @@
 		public override void Write(int value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(int)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteInt32BigEndian(buffer, value);
 					break;
 				default:
@@ -97,9 +97,9 @@
 		public override void Write(uint value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(uint)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteUInt32BigEndian(buffer, value);
 					break;
 				default:
@@ -116,9 +116,9 @@
 		public override void Write(long value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(long)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteInt64BigEndian(buffer, value);
 					break;
 				default:
@@ -135,9 +135,9 @@
 		public override void Write(ulong value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(ulong)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteUInt64BigEndian(buffer, value);
 					break;
 				default:
@@ -154,9 +154,9 @@
 		public override void Write(Half value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(ushort)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteHalfBigEndian(buffer, value);
 					break;
 				default:
@@ -173,9 +173,9 @@
 		public override void Write(float value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(float)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteSingleBigEndian(buffer, value);
 					break;
 				default:
@@ -192,9 +192,9 @@
 		public override void Write(double value)
 		{
 			Span<byte> buffer = stackalloc byte[sizeof(double)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteDoubleBigEndian(buffer, value);
 					break;
 				default:
@@ -233,9 +233,9 @@
 			ArgumentNullException.ThrowIfNull(_flags);
 
 			Span<byte> buffer = stackalloc byte[sizeof(decimal)];
-			switch (Order)
+			switch (endian)
 			{
-				case ByteOrder.BigEndian:
+				case Endian.BigEndian:
 					BinaryPrimitives.WriteInt32BigEndian(buffer, _flags.Value);
 					BinaryPrimitives.WriteInt32BigEndian(buffer[4..], (int)High.Value);
 					BinaryPrimitives.WriteInt32BigEndian(buffer[8..], (int)Mid.Value);
