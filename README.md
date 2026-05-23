@@ -1,14 +1,14 @@
 # System.IO namesapce Extensions
 
-* ByteOrder enum (LittleEndian, BigEndian)
+* Endian enum (LittleEndian, BigEndian)
 
-## BinaryReaderV2
+## EndianBinaryReader
 
-* constructor(Straem input, Encoding encoding, bool leaveOpen, ByteOrder order)
+* constructor(Straem input, Encoding encoding, bool leaveOpen, Endian order)
 
-## BinaryWriterV2
+## EndianBinaryWriter
 
-* constructor(Stream output, Encoding encoding, bool leaveOpen, ByteOrder order)
+* constructor(Stream output, Encoding encoding, bool leaveOpen, Endian order)
 
 ## BinaryReader Extensions
 
